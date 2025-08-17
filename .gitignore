@@ -1,0 +1,8 @@
+# Environment variables
+.env
+
+# Dependencies
+node_modules
+
+# Prisma generated client
+src/generated/prisma
