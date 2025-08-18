@@ -21,4 +21,33 @@ export async function register(data: any) {
   }
 
   const passwordHash = await bcrypt.hash(data.password, 12);
+
+  const user = await prisma.user.create({
+    data: {
+      username: data.username,
+      passwordHash,
+      name: data.name,
+      email: data.email?.toLowerCase() ?? null,
+      phone: data.phone ?? null,
+      city: data.city ?? null,
+      age: data.age ?? null,
+      gender: data.gender ?? null,
+    },
+  });
+
+  const token = signJwt({ sub: user.id, role: user.role });
+  const { passwordHash: _, ...safe } = user;
+  return { user: safe, token };
+}
+
+export async function login(username: string, password: string) {
+  const user = prisma.user.findUnique({ where: { username } });
+  if (!user || !user.passwordHash) throw new Error('Invalid credentials');
+
+  const valid = await bcrypt.compare(password, user.passwordHash);
+  if (!valid) throw new Error('Invalid credentials');
+
+  const token = signJwt({ sub: user.id, role: user.role });
+  const { passwordHash: _, ...safe } = user;
+  return { user: safe, token };
 }
