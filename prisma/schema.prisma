@@ -18,17 +18,22 @@ model User {
   id           String   @id @default(uuid())
   username     String   @unique
   email        String?  @unique
-  passwordHash String?  // null for Google OAuth users
+  passwordHash String?
   name         String
   phone        String?
   city         String?
   age          Int?
-  gender       String?
+  gender       Gender?
   googleId     String?  @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   reset        PasswordReset[]
   payments     Payment[]
+}
+
+enum Gender {
+  laki_laki
+  perempuan
 }
 
 model PasswordReset {

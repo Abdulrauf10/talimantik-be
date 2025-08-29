@@ -10,9 +10,11 @@ import {
 
 const router = Router();
 
-router.post('/regiter/', registerController);
+router.post('/register', registerController);
 router.post('/login', loginController);
 router.post('/forgot-password', forgotPasswordController);
 router.post('/reset-password', resetPasswordController);
 router.get('/google', googleAuthController);
 router.get('/google/callback', ...googleCallbackController);
+
+export default router;

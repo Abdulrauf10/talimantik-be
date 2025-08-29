@@ -8,7 +8,7 @@ export const registerSchema = z.object({
   phone: z.string().optional(),
   city: z.string().optional(),
   age: z.number().optional(),
-  gender: z.enum(['laki-lagi', 'perempuan']).optional(),
+  gender: z.enum(['laki_laki', 'perempuan']).optional(),
 });
 
 export const loginSchema = z.object({
