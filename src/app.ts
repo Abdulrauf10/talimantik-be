@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
+import midtransRoutes from './modules/payment/midtrans.routes';
 import './core/auth/passport';
 import passport from 'passport';
 
@@ -15,6 +16,7 @@ app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/payment', midtransRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'API is running 🚀' });
