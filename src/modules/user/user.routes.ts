@@ -1,26 +1,20 @@
-// import { Router } from 'express';
-// import { requireAuth } from '../middleware/requireAuth';
-// import { requireRole } from '../middleware/requireRole';
-// import {
-//   meController,
-//   getAllUsersController,
-//   updateUserController,
-// } from './user.controller';
+// src/modules/user/user.routes.ts
+import { Router } from 'express';
+import {
+  getMeController,
+  getUsersController,
+  createUserController,
+  updateUserController,
+  deleteUserController,
+} from './user.controller';
+import { requireAuth } from '../../core/middleware/requireAuth';
 
-// const router = Router();
+const router = Router();
 
-// router.get('/me', requireAuth, meController);
-// router.get(
-//   '/users',
-//   requireAuth,
-//   requireRole('user_admin'),
-//   getAllUsersController,
-// );
-// router.put(
-//   '/users/:id',
-//   requireAuth,
-//   requireRole('user_admin'),
-//   updateUserController,
-// );
+router.get('/me', requireAuth, getMeController);
+router.get('/', requireAuth, getUsersController);
+router.post('/', requireAuth, createUserController);
+router.put('/:id', requireAuth, updateUserController);
+router.delete('/:id', requireAuth, deleteUserController);
 
-// export default router;
+export default router;
