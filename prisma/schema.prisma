@@ -67,5 +67,17 @@ enum PaymentStatus {
   SUCCESS
   FAILED
 }
+model Collection {
+  id      String @id @default(uuid())
+  subject String
+  chapter Int
+  level   LevelStatus 
+}
+
+enum LevelStatus {
+  easy
+  medium
+  hard
+}
 
 
