@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -54,6 +53,10 @@ model Payment {
   passwordHash  String?
   name          String?
   status        PaymentStatus @default(PENDING)
+  phone         String?
+  city          String?
+  age           Int?
+  gender        Gender?
   orderId       String   @unique
   amount        Int
   createdAt     DateTime @default(now())

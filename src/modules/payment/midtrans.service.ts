@@ -26,9 +26,9 @@ export async function createPayment(
       email: email,
     },
     callbacks: {
-      finish: 'http://localhost:3001/payment/success', // Next.js page
-      pending: 'http://localhost:3001/payment/pending',
-      error: 'http://localhost:3001/payment/failed',
+      finish: 'http://localhost:3000/payment/success', // Next.js page
+      pending: 'http://localhost:3000/payment/pending',
+      error: 'http://localhost:3000/payment/failed',
     },
   };
 

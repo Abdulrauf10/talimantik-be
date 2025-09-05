@@ -1,4 +1,5 @@
 import { prisma } from '../../core/database/prisma';
+import { Prisma } from '@prisma/client';
 
 interface UseQueryParams {
   page?: number;
@@ -7,7 +8,7 @@ interface UseQueryParams {
 }
 
 export async function getMe(userId: string) {
-  return prisma.findUnique({
+  return prisma.user.findUnique({
     where: { id: userId },
     select: {
       id: true,
@@ -33,9 +34,21 @@ export async function getUsers({
   const where = search
     ? {
         OR: [
-          { username: { contains: search, mode: 'insensitive' } },
-          { email: { contains: search, mode: 'insensitive' } },
-          { name: { contains: search, mode: 'insensitive' } },
+          {
+            username: {
+              contains: search,
+              mode: 'insensitive' as Prisma.QueryMode,
+            },
+          },
+          {
+            email: {
+              contains: search,
+              mode: 'insensitive' as Prisma.QueryMode,
+            },
+          },
+          {
+            name: { contains: search, mode: 'insensitive' as Prisma.QueryMode },
+          },
         ],
       }
     : {};

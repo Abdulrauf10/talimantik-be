@@ -30,8 +30,6 @@ export async function register(data: any) {
       email: data.email?.toLowerCase(),
       passwordHash,
       name: data.name,
-      phone: data.phone,
-      city: data.city,
       age: data.age,
       gender: data.gender,
       amount: Number(process.env.REGISTRATION_FEE) || 10000,
@@ -66,19 +64,19 @@ export async function finalizeRegistration(orderId: string) {
     data: { status: 'SUCCESS', userId: user.id },
   });
 
-  const token = signJwt({ sub: user.id, role: user.role });
+  const token = signJwt({ sub: user.id });
   const { passwordHash: _, ...safe } = user;
   return { user: safe, token };
 }
 
 export async function login(username: string, password: string) {
-  const user = prisma.user.findUnique({ where: { username } });
+  const user = await prisma.user.findUnique({ where: { username } });
   if (!user || !user.passwordHash) throw new Error('Invalid credentials');
 
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) throw new Error('Invalid credentials');
 
-  const token = signJwt({ sub: user.id, role: user.role });
+  const token = signJwt({ sub: user.id });
   const { passwordHash: _, ...safe } = user;
   return { user: safe, token };
 }
